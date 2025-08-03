@@ -40,7 +40,6 @@ const Product = () => {
       const filteredProducts = products.filter(
         (product) => product.category === category
       );
-
       setProducts(filteredProducts);
     }
   }, [category]);
