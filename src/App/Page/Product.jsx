@@ -10,8 +10,9 @@ const Product = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [category, setCategory] = useState("");
- const [minPrice,setMinPrice] =  useState(0);
- const [maxPrice,setMaxPrice] =  useState(100);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100);
+  const [originalProducts, setOriginalProducts] = useState([]);
   const handlePageClick = (data) => {
     setSkip(data.selected * 24);
   };
@@ -20,7 +21,7 @@ const Product = () => {
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
-        setFilteredProducts(data.products);
+        setOriginalProducts(data.products);
         setLoader(false);
       })
       .catch((err) => console.error(err));
@@ -32,8 +33,8 @@ const Product = () => {
     setCategory(event.target.value);
   };
   useEffect(() => {
-    if (category === "" ) {
-      setProducts(filteredProducts);
+    if (category === "") {
+      setProducts(originalProducts);
       setMinPrice(0);
     } else {
       const filteredProducts = products.filter(
@@ -42,16 +43,22 @@ const Product = () => {
 
       setProducts(filteredProducts);
     }
-  }, [category,]);
-     
-  useEffect(()=>{
-    const filteredProducts = products.filter((product) => product.price >= minPrice);
-    setProducts(filteredProducts);
-  },[minPrice])
+  }, [category]);
 
+  useEffect(() => {
+    let filtered = [...originalProducts];
+
+    if (category) {
+      filtered = filtered.filter((product) => product.category === category);
+    }
+
+    filtered = filtered.filter((product) => product.price >= minPrice);
+
+    setProducts(filtered);
+  }, [minPrice, category, originalProducts]);
 
   return (
-    <div className='pt-16'>
+    <div className="pt-16">
       <div className="min-h-screen bg-gradient-to-r from-purple-100 to-blue-100 py-10 px-4 md:px-12 bg-clip-text">
         <h1 className="text-6xl text-center w-2xl bg-gradient-to-r from-purple-400 to-blue-600  font-bold  mb-10  font-[cursive] text-transparent bg-clip-text">
           Product Filters
@@ -78,18 +85,13 @@ const Product = () => {
               type="range"
               min={1}
               max={60}
-             value={minPrice}
-             onInput={(e)=>setMinPrice(e.target.value)}
+              value={minPrice}
+              onInput={(e) => setMinPrice(e.target.value)}
             />
             <h1>Min price :${minPrice}</h1>
           </div>
           <div>
-            <input
-              type="range"
-              min={100}
-              max={10000}
-              
-            />
+            <input type="range" min={100} max={10000} />
             <h1>Min price :</h1>
           </div>
         </div>
@@ -135,22 +137,22 @@ const Product = () => {
       {/* i am going to use react-paginate Using pagination to load more products */}
       <div>
         {/* {category === "" && ( */}
-          <ReactPaginate
-            className="flex gap-2 mt-6 mb-6 select-none hover:text-blue-600  justify-center cursor-pointer"
-            previousLabel={"<--"}
-            nextLabel={"-->"}
-            breakLabel={"..."}
-            pageCount={9}
-            marginPagesDisplayed={4}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName="inline-flex -space-x-px rounded-md shadow"
-            pageClassName="px-4 rounded-lg py-2 text-md font-medium text-gray-900 ring-1  ring-inset ring-gray-400 hover:text-blue-500 hover:bg-gray-400"
-            activeClassName="z-10 bg-blue-600 rounded-lg text-white"
-            previousClassName="px-2 py-2 rounded-lg text-black-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-            nextClassName="px-2 py-2 text-black-400 rounded-lg ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-            disabledClassName="opacity-50"
-          />
+        <ReactPaginate
+          className="flex gap-2 mt-6 mb-6 select-none hover:text-blue-600  justify-center cursor-pointer"
+          previousLabel={"<--"}
+          nextLabel={"-->"}
+          breakLabel={"..."}
+          pageCount={9}
+          marginPagesDisplayed={4}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName="inline-flex -space-x-px rounded-md shadow"
+          pageClassName="px-4 rounded-lg py-2 text-md font-medium text-gray-900 ring-1  ring-inset ring-gray-400 hover:text-blue-500 hover:bg-gray-400"
+          activeClassName="z-10 bg-blue-600 rounded-lg text-white"
+          previousClassName="px-2 py-2 rounded-lg text-black-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+          nextClassName="px-2 py-2 text-black-400 rounded-lg ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+          disabledClassName="opacity-50"
+        />
         {/* )} */}
       </div>
     </div>
