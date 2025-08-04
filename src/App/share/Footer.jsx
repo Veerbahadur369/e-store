@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-10 px-4 sm:px-6 lg:px-8 mt-1">
+    <footer className="bg-gray-900 text-white py-10 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         
         {/* Brand Info */}
@@ -41,7 +41,7 @@ const Footer = () => {
           <ul className="space-y-2 text-sm">
             <li>Email: <a href="mailto:support@onlineshop.com" className="hover:text-orange-400">support@onlineshop.com</a></li>
             <li>Phone: <a href="tel:+919999999999" className="hover:text-orange-400">+91 99999 99999</a></li>
-            <li>Address: 123 Food Street, Delhi, India</li>
+            <li>Address: 123 Tech Street, Bihar, India</li>
           </ul>
         </div>
       </div>

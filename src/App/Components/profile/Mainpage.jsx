@@ -8,7 +8,7 @@ function Mainpage() {
   const data = JSON.parse(localStorage.getItem("userLogined"));
   console.log(data);
   return (
-    <div className="flex flex-col justify-center w-full mt-10 text-white bg-[#242a2f]">
+    <div className="flex flex-col justify-center w-full mt-20 text-white bg-[#242a2f]">
       <div>
         <h1 className="text-4xl text-center ">Profile</h1>
         <img

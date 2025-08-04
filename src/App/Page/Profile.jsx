@@ -11,7 +11,7 @@ function Profile() {
  
   return (
     <Fragment>
-       <div className='flex text-center bg-[#242a2f]'>
+       <div className='flex text-center  bg-[#242a2f]'>
       <Sidebar />
       <Mainpage />
        </div>

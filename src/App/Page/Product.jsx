@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { FaStar } from "react-icons/fa";
+import { FaFilter, FaStar } from "react-icons/fa";
 import Loader from "../Components/Loader";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { FaX } from "react-icons/fa6";
 
 const Product = () => {
   const [loader, setLoader] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState(50000);
+  const [brands, setBrands] = useState("");
   const [originalProducts, setOriginalProducts] = useState([]);
+  const [showFilter,setShowFilter] =useState(true);
   const handlePageClick = (data) => {
     setSkip(data.selected * 24);
   };
@@ -28,21 +30,45 @@ const Product = () => {
   }, [skip]);
 
   const categories = [...new Set(products.map((product) => product.category))];
+  const allBrands =[...new Set(products.map((product) => product.brand))];
+  console.log(allBrands)
+  console.log()
   const handleCategoryChange = (event) => {
     console.log(event.target.value);
     setCategory(event.target.value);
   };
+  const handleBrandChange = (event) => {
+    setBrands(event.target.value);
+  }
   useEffect(() => {
     if (category === "") {
       setProducts(originalProducts);
       setMinPrice(0);
+      setMaxPrice(50000);
+      setBrands("");
     } else {
       const filteredProducts = products.filter(
         (product) => product.category === category
       );
       setProducts(filteredProducts);
     }
+
+
   }, [category]);
+
+  useEffect(() => {
+    if (brands === "") {
+      setProducts(originalProducts);
+      setMinPrice(0);
+      setCategory("")
+      setMaxPrice(50000);
+    } else {
+      const filteredProducts = products.filter(
+        (product) => product.brand === brands
+      );
+      setProducts(filteredProducts);
+    }
+  }, [brands]);
 
   useEffect(() => {
     let filtered = [...originalProducts];
@@ -50,26 +76,37 @@ const Product = () => {
     if (category) {
       filtered = filtered.filter((product) => product.category === category);
     }
-
-    filtered = filtered.filter((product) => product.price >= minPrice);
+    if(brands){
+      filtered = filtered.filter((product) => product.brand === brands);
+    }
+    if(minPrice){
+      filtered = filtered.filter((product) => product.price >= minPrice);
+    }
+    if(maxPrice){
+      filtered = filtered.filter((product) => product.price <= maxPrice);
+    }
 
     setProducts(filtered);
-  }, [minPrice, category, originalProducts]);
+  }, [minPrice,maxPrice ,category, originalProducts]);
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 select-none" onDoubleClick={()=>setShowFilter(!showFilter)}>
       <div className="min-h-screen bg-gradient-to-r from-purple-100 to-blue-100 py-10 px-4 md:px-12 bg-clip-text">
-        <h1 className="text-6xl text-center w-2xl bg-gradient-to-r from-purple-400 to-blue-600  font-bold  mb-10  font-[cursive] text-transparent bg-clip-text">
-          Product Filters
+        <h1 className="text-6xl text-center relative z-1 w-2xl bg-gradient-to-r from-purple-400 to-blue-600  font-bold  mb-10  font-[cursive] text-transparent bg-clip-text">
+          Buy more get more
         </h1>
-        <div className="flex justify-center gap-12 items-center mb-6">
+
+        {/* all filters are start */}
+        <div className="flex justify-start">{ showFilter? <div onClick={()=>setShowFilter(!showFilter)} className="text-3xl cursor-pointer text-left font-bold border-2 border-[#2e2c2c] h-12 w-32 pt-2 rounded-2xl hover:border-blue-500 hover:text-blue-500 text-[#2d2e31]  mb-10 flex justify-center "><h1>Filters </h1><FaFilter  className="text-3xl w-fit  text-right   font-bold  mb-10  "/></div>: <FaX onClick={()=>setShowFilter(!showFilter)} className="text-3xl text-right   font-bold  mb-10  "/>}</div>
+        
+        {!showFilter && <div className="flex justify-center flex-col absolute z-23 bg-gradient-to-r from-purple-200 to-blue-500 py-10 px-4 md:px-12 rounded-3xl left-3 gap-12 items-center mb-6">
           <div className="mb-4">
             <select
               value={category}
               onChange={handleCategoryChange}
               name="category"
               id="category"
-              className="block text-gray-700 py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-48 text-gray-700 py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option value={""}> All categories</option>
               {categories?.map((category) => (
@@ -79,8 +116,29 @@ const Product = () => {
               ))}
             </select>
           </div>
+
+          {/* all brands option start */}
+           <div className="mb-4">
+            <select
+              value={brands}
+              onChange={handleBrandChange}
+              name="category"
+              id="category"
+              className="block w-48 text-gray-700 py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value={""}> All Brands</option>
+              {allBrands?.map((brand,i) => (
+                <option key={i} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* all brands option end */}
+
           <div>
             <input
+              className="w-48 accent-purple-400 focus:accent-green-600"
               type="range"
               min={1}
               max={60}
@@ -90,10 +148,15 @@ const Product = () => {
             <h1>Min price :${minPrice}</h1>
           </div>
           <div>
-            <input type="range" min={100} max={10000} />
-            <h1>Min price :</h1>
+            <input type="range" min={100} max={50000}
+               className="w-48 accent-purple-400 focus:accent-green-600"
+            value={maxPrice}
+            onInput={(e) => setMaxPrice(e.target.value)}
+            />
+            <h1>Max price :{maxPrice}</h1>
           </div>
-        </div>
+        </div>}
+        {/* all filters are end */}
 
         {loader && <Loader />}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -135,7 +198,7 @@ const Product = () => {
       </div>
       {/* i am going to use react-paginate Using pagination to load more products */}
       <div>
-        {/* {category === "" && ( */}
+        {showFilter && (
         <ReactPaginate
           className="flex gap-2 mt-6 mb-6 select-none hover:text-blue-600  justify-center cursor-pointer"
           previousLabel={"<--"}
@@ -152,7 +215,7 @@ const Product = () => {
           nextClassName="px-2 py-2 text-black-400 rounded-lg ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
           disabledClassName="opacity-50"
         />
-        {/* )} */}
+         )}
       </div>
     </div>
   );
