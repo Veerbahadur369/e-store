@@ -10,11 +10,18 @@ import {
 } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
+import { set } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
-  const [store, setStore] = useState(null);
+  const [store, setStore] = useState(()=>{
+    const storedData = localStorage.getItem("cart");
+    return storedData ? JSON.parse(storedData) : [];
+  });
   const arrayRate = [1, 2, 3, 4, 5];
   const { id } = useParams();
+      const cartData =[]
+
   useEffect(() => {
     fetch("https://dummyjson.com/products/" + id)
       .then((res) => res.json())
@@ -37,9 +44,22 @@ const ProductDetail = () => {
   const createdAt = new Date(product.meta?.createdAt).toLocaleDateString();
   const updatedAt = new Date(product.meta?.updatedAt).toLocaleDateString();
 
+  
    const handleAddToCart = ()=>{
+    if(store.some((item) => item.id === product.id) ){
+      toast.error("Product already added to cart",{theme:'colored',autoClose:1000}) 
+      return;
+    }
+       const updatedProduct = [...store, product];
+         setStore(updatedProduct);
+      localStorage.setItem("cart", JSON.stringify(updatedProduct)) 
+      toast.success("Product added to cart",{theme:'colored',autoClose:1000})
     
+     
    }
+
+
+   console.log(store)
   return (
     <div className="bg-gradient-to-br from-white to-blue-50 min-h-screen p-6 md:p-12">
       <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
@@ -194,7 +214,7 @@ const ProductDetail = () => {
             </button>
           </div>
         </div>
-
+            <ToastContainer />
         {/* Shipping & Return Info */}
         <div className="border-t p-8 bg-blue-50 grid md:grid-cols-2 gap-8">
           <div className="flex items-start gap-4">
