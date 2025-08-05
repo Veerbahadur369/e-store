@@ -31,10 +31,8 @@ const Product = () => {
 
   const categories = [...new Set(products.map((product) => product.category))];
   const allBrands =[...new Set(products.map((product) => product.brand))];
-  console.log(allBrands)
-  console.log()
+ 
   const handleCategoryChange = (event) => {
-    console.log(event.target.value);
     setCategory(event.target.value);
   };
   const handleBrandChange = (event) => {

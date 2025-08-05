@@ -15,6 +15,7 @@ import ErrorPage from "./App/Page/ErrorPage";
 import Profile from "./App/Page/Profile";
 import RePieChart from "./App/Components/ReactChart/Profile/RePieChart";
 import ReAreaChart from "./App/Components/ReactChart/Profile/ReAreaChart";
+import Cart from "./App/Page/Cart";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="products/details/:id" element={<ProductDetail />} />
             <Route path="about" element={<About />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="cart" element={<Cart/>}/>
             <Route path="*" element={<ErrorPage />} />
           </Route>
           <Route path="/graph" element={<ReAreaChart/>}/>
