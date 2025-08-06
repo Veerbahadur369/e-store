@@ -10,11 +10,24 @@ import { set } from 'react-hook-form';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [storedLoginStatus, setStoredLoginStatus] = useState(localStorage.getItem('isLoggedIn'));
+  const [cartLength, setCartLength] = useState(0);
   const logout=() => setStoredLoginStatus(false);
   const navigate=useNavigate();
+
+
+
+
   useEffect(() => {
     logout
   } ,[storedLoginStatus])
+    const data = JSON.parse(localStorage.getItem("cart"));
+   
+   useEffect(() => {
+    const spreadData = [...data];
+     if (spreadData) {
+       setCartLength(spreadData.length);
+     }
+   },[data])
   return (
     <div className=''>
   <nav className='fixed w-full z-29'>
@@ -32,7 +45,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="cart-icon flex items-center">
-        <NavLink to="cart"><FaShoppingCart className='hover:text-orange-500' /></NavLink>
+        <NavLink to="cart" className={'relative'}><FaShoppingCart className='hover:text-orange-500 ' /> {data==0? "": <p className='absolute top-[-20px] right-[-15px] bg-red-600 text-sm rounded-full w-5 h-5 p-1 flex text-white justify-center items-center'>{cartLength}</p>} </NavLink>
         
       { storedLoginStatus ? <NavLink to="profile" className="ml-4 h-10 w-10 bg-gray-400 text-center text-2xl text-white px-2 rounded-full"><h1>{storedLoginStatus}</h1></NavLink> : <NavLink to="/login" className="ml-4 text-white">Login</NavLink> }
       </div>

@@ -6,7 +6,6 @@ import ReactPaginate from "react-paginate";
 import { FaX } from "react-icons/fa6";
 
 const Product = () => {
-  const [loader, setLoader] = useState(true);
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [category, setCategory] = useState("");
@@ -24,7 +23,6 @@ const Product = () => {
       .then((data) => {
         setProducts(data.products);
         setOriginalProducts(data.products);
-        setLoader(false);
       })
       .catch((err) => console.error(err));
   }, [skip]);
@@ -156,7 +154,6 @@ const Product = () => {
         </div>}
         {/* all filters are end */}
 
-        {loader && <Loader />}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products?.map((product) => (
             <div
@@ -186,7 +183,7 @@ const Product = () => {
                     </span>
                   </div>
                   <button className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg hover:opacity-90 transition">
-                    Add to Cart
+                    view more details
                   </button>
                 </div>
               </Link>{" "}

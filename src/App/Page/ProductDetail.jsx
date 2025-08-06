@@ -28,24 +28,23 @@ const ProductDetail = () => {
       .then((data) => setProduct(data));
   }, []);
 
-  if (!product) {
-    return (
-      <div className="text-center mt-20 text-lg">
-        <Loader />
-      </div>
-    );
-  }
+
 
   const originalPrice = (
-    product.price /
-    (1 - product.discountPercentage / 100)
+    product?.price /
+    (1 - product?.discountPercentage / 100)
   ).toFixed(2);
 
-  const createdAt = new Date(product.meta?.createdAt).toLocaleDateString();
-  const updatedAt = new Date(product.meta?.updatedAt).toLocaleDateString();
+  const createdAt = new Date(product?.meta?.createdAt).toLocaleDateString();
+  const updatedAt = new Date(product?.meta?.updatedAt).toLocaleDateString();
 
   
    const handleAddToCart = ()=>{
+          const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if(!isLoggedIn){
+    toast.warning("Please login first", { theme: "colored", autoClose: 1000 });
+         return
+    }
     if(store.some((item) => item.id === product.id) ){
       toast.error("Product already added to cart",{theme:'colored',autoClose:1000}) 
       return;
@@ -58,9 +57,9 @@ const ProductDetail = () => {
      
    }
 
-
-   console.log(store)
   return (
+    <>  
+    
     <div className="bg-gradient-to-br from-white to-blue-50 min-h-screen p-6 md:p-12">
       <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         {/* Top Section */}
@@ -73,12 +72,12 @@ const ProductDetail = () => {
           </Link>
           <div>
             <img
-              src={product.thumbnail}
-              alt={product.title}
+              src={product?.thumbnail}
+              alt={product?.title}
               className="w-full h-[400px] object-cover rounded-xl shadow-lg hover:scale-105 transition"
             />
             <div className="flex gap-2 mt-4 overflow-x-auto">
-              {product.images.map((img, idx) => (
+              {product?.images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -89,18 +88,18 @@ const ProductDetail = () => {
                   className="w-20 h-20 rounded-lg object-cover border hover:border-blue-500 transition"
                 />
               ))}
-              <img src={product.meta.qrCode} alt="" className="w-20 h-20" />
+              <img src={product?.meta.qrCode} alt="" className="w-20 h-20" />
             </div>
           </div>
 
           {/* Product Info */}
           <div className="space-y-4">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              {product.title}
+              {product?.title}
             </h1>
-            <p className="text-blue-600 font-medium">{product.brand}</p>
+            <p className="text-blue-600 font-medium">{product?.brand}</p>
             <p className="text-sm text-gray-500">
-              Category: {product.category}
+              Category: {product?.category}
             </p>
 
             {/* Rating */}
@@ -109,35 +108,35 @@ const ProductDetail = () => {
                 <FaStar
                   key={i}
                   className={
-                    i < Math.round(product.rating)
+                    i < Math.round(product?.rating)
                       ? "text-yellow-500"
                       : "text-gray-300"
                   }
                 />
               ))}
               <span className="text-gray-600 ml-2">
-                {product.rating.toFixed(1)} / 5.0
+                {product?.rating.toFixed(1)} / 5.0
               </span>
             </div>
 
             {/* Pricing */}
             <div className="text-2xl font-bold text-green-600">
-              ${product.price}
+              ${product?.price}
               <del className="ml-3 text-sm text-gray-400 ">
                 ${originalPrice}
               </del>
               <span className="ml-3 text-sm text-red-600">
-                -{product.discountPercentage}%
+                -{product?.discountPercentage}%
               </span>
             </div>
 
             {/* Stock */}
             <div className="flex items-center gap-2">
-              {product.stock > 0 ? (
+              {product?.stock > 0 ? (
                 <>
                   <FaCheckCircle className="text-green-500" />
                   <span className="text-green-700 text-sm font-semibold">
-                    In Stock: {product.stock} items
+                    In Stock: {product?.stock} items
                   </span>
                 </>
               ) : (
@@ -152,11 +151,11 @@ const ProductDetail = () => {
 
             {/* Description */}
             <p className="text-gray-700 text-base leading-relaxed">
-              {product.description}
+              {product?.description}
             </p>
 
             {/* Meta Information */}
-            {product.meta && (
+            {product?.meta && (
               <div className="mt-4">
                 <h4 className="text-md font-semibold mb-1 text-gray-700">
                   Use Before
@@ -174,7 +173,7 @@ const ProductDetail = () => {
                     <span className="font-medium text-gray-700">Reviews:</span>
                     <summary>
                       <details className="flex flex-wrap gap-2 mt-1">
-                        {product.reviews?.map((keyword, idx) => (
+                        {product?.reviews?.map((keyword, idx) => (
                           <div>
                             <div
                               key={idx}
@@ -242,6 +241,7 @@ const ProductDetail = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
