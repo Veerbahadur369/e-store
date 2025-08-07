@@ -8,20 +8,20 @@ import Login from "./App/modules/Auth/Login";
 import Welcomepage from "./App/Page/Welcomepage";
 import ImageSlider from "./App/Components/ImageSlider";
 // import Product from "./App/Page/Product";
-const Product =lazy(()=>import("./App/Page/Product"));
 import MainLayout from "./App/modules/Layout/MainLayout";
 import About from "./App/Page/About";
 import Welcome from "./App/Page/Welcome";
 // import ProductDetail from "./App/Page/ProductDetail";
-const ProductDetail =lazy(()=>import("./App/Page/ProductDetail"))
 import Contact from "./App/Page/Contact";
 import ErrorPage from "./App/Page/ErrorPage";
 import Profile from "./App/Page/Profile";
 import RePieChart from "./App/Components/ReactChart/Profile/RePieChart";
 import ReAreaChart from "./App/Components/ReactChart/Profile/ReAreaChart";
 // import Cart from "./App/Page/Cart";
-const Cart =lazy(()=>import("./App/Page/Cart"))
 import Loader from "./App/Components/Loader";
+const Product =lazy(()=>import("./App/Page/Product"));
+const ProductDetail =lazy(()=>import("./App/Page/ProductDetail"))
+const Cart =lazy(()=>import("./App/Page/Cart"))
 
 function App() {
   return (
