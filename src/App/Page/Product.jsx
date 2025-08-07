@@ -102,7 +102,7 @@ const Product = () => {
               onChange={handleCategoryChange}
               name="category"
               id="category"
-              className="block w-48 text-gray-700 py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-48 bg-[#5b5656]  text-white py-2 px-4 border border-gray-300  rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option value={""}> All categories</option>
               {categories?.map((category) => (
@@ -120,7 +120,7 @@ const Product = () => {
               onChange={handleBrandChange}
               name="category"
               id="category"
-              className="block w-48 text-gray-700 py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-48 bg-[#5b5656]  text-white py-2 px-4 border border-gray-300  rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option value={""}> All Brands</option>
               {allBrands?.map((brand,i) => (

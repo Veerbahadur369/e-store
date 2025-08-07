@@ -44,7 +44,7 @@ const Welcome = () => {
           <img
             src="https://plus.unsplash.com/premium_photo-1683288295814-84a199da83d9?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Hero"
-            className="w-full rounded-xl shadow-lg"
+            className="w-full rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:w-fit"
           />
         </div>
       </div>
@@ -65,7 +65,7 @@ const Welcome = () => {
                 <img
                   src={product.image}
                   alt={product.id}
-                  className="h-48 w-full object-cover"
+                  className="h-48 w-full object-cover hover:scale-105 transition-all duration-300"
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg text-gray-800 mb-2 font-[cursive] truncate">

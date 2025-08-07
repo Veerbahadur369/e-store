@@ -39,19 +39,19 @@ function Cart() {
                   <input
                     type="number"
                     placeholder="1"
-                    className="w-16  rounded-md outline-none border-2 bg-gray-500"
+                    className="w-16  rounded-md outline-none border-2 bg-gray-500 text-white pl-1 text-center  "
                   />
                   {/* product quantity end */}
                 </div>
                 <div className="flex-1 text-center  text-2xl">{item.price}</div>
                 <div className="flex-1 text-center">
-                  <button className="w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl text-white  bg-orange-400">
+                  <button className="w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl text-white  bg-orange-400 hover:bg-amber-500">
                   Buy
                 </button>
                 </div>
                 <div className="flex-1 text-center">
                   <button
-                   className="bg-red-600 w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl text-white"
+                   className="bg-red-600 w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl hover:bg-red-700 hover:shadow-2xl text-white"
                     onClick={(e) => {
                     const filteredData =  localaData?.filter((remove) => remove.id !== item.id);
                     setCartData(filteredData);

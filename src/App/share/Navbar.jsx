@@ -23,9 +23,8 @@ const Navbar = () => {
     const data = JSON.parse(localStorage.getItem("cart"));
    
    useEffect(() => {
-    const spreadData = [...data];
-     if (spreadData) {
-       setCartLength(spreadData.length);
+     if (data) {
+       setCartLength(data?.length);
      }
    },[data])
   return (
