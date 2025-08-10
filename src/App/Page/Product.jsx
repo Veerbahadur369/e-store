@@ -3,7 +3,8 @@ import { FaFilter, FaStar } from "react-icons/fa";
 import Loader from "../Components/Loader";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { FaX } from "react-icons/fa6";
+import { FaGear, FaX } from "react-icons/fa6";
+import { GiBigGear } from "react-icons/gi";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -93,7 +94,7 @@ const Product = () => {
         </h1>
 
         {/* all filters are start */}
-        <div className="flex justify-start">{ showFilter? <div onClick={()=>setShowFilter(!showFilter)} className="text-3xl cursor-pointer text-left font-bold border-2 border-[#2e2c2c] h-12 w-32 pt-2 rounded-2xl hover:border-blue-500 hover:text-blue-500 text-[#2d2e31]  mb-10 flex justify-center "><h1>Filters </h1><FaFilter  className="text-3xl w-fit  text-right   font-bold  mb-10  "/></div>: <FaX onClick={()=>setShowFilter(!showFilter)} className="text-3xl text-right   font-bold  mb-10  "/>}</div>
+        <div className="flex justify-start ">{ showFilter? <div onClick={()=>setShowFilter(!showFilter)} className="text-3xl cursor-pointer text-left font-bold border-2 border-[#2e2c2c] h-10 w-fit p-1 rounded-2xl hover:border-blue-500 hover:text-blue-500 text-[#545455]  mb-10 flex justify-center "><h1 className="text-2xl">Filters </h1><FaFilter  className="text-2xl w-fit  text-right   font-bold  mb-10 pt-2  "/></div>: <FaX onClick={()=>setShowFilter(!showFilter)} className="text-3xl text-right   font-bold  mb-10  "/>}</div>
         
         {!showFilter && <div className="flex justify-center flex-col absolute z-23 bg-gradient-to-r from-purple-200 to-blue-500 py-10 px-4 md:px-12 rounded-3xl left-3 gap-12 items-center mb-6">
           <div className="mb-4">
@@ -151,8 +152,22 @@ const Product = () => {
             />
             <h1>Max price :{maxPrice}</h1>
           </div>
+
+         
         </div>}
         {/* all filters are end */}
+
+         {/* All settings are start */}
+       <div className="mb-4 flex justify-end absolute right-10 top-[200px]">
+  <div className="group flex justify-center h-10 items-center gap-1 border-2 rounded-2xl p-1 cursor-pointer  hover:text-blue-500">
+    <h1 className="text-xl font-bold mb-2 text-[#5b5656] group-hover:text-blue-500 transition">
+      Setting
+    </h1>
+    <FaGear className="text-2xl text-[#5b5656] group-hover:text-blue-500 transition" />
+  </div>
+</div>
+
+          {/* All settings are End */}
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products?.map((product) => (

@@ -16,7 +16,7 @@ function Cart() {
         </div>
         {/* product randering here */}
         <div className="pl-10 pb-3">
-          {cartData.length==0 ? (
+          {!localaData ? (
             <h1 className="flex-1 h-[30vh] pt-14 text-center text-2xl">
               No product found
             </h1>
