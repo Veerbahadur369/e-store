@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 function Cart() {
   const localaData = JSON.parse(localStorage.getItem("cart"));
-  const [cartData, setCartData] = useState(localaData);
-  console.log(cartData)
- 
+  const [cartData, setCartData] = useState([]);
+useEffect(()=>{
+  setCartData(localaData)
+},[localaData])
+  console.log(cartData);
+
   return (
     <div className="h-fit mx-12 pt-20 mb-3 ">
       <div className="border-2 h-full mb-3 rounded-2xl shadow-2xl shadow-gray-400 border-gray-400 ">
@@ -16,7 +20,7 @@ function Cart() {
         </div>
         {/* product randering here */}
         <div className="pl-10 pb-3">
-          {!localaData ? (
+          { cartData?.length===0? (
             <h1 className="flex-1 h-[30vh] pt-14 text-center text-2xl">
               No product found
             </h1>
@@ -46,16 +50,21 @@ function Cart() {
                 <div className="flex-1 text-center  text-2xl">{item.price}</div>
                 <div className="flex-1 text-center">
                   <button className="w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl text-white  bg-orange-400 hover:bg-amber-500">
-                  Buy
-                </button>
+                    Buy
+                  </button>
                 </div>
                 <div className="flex-1 text-center">
                   <button
-                   className="bg-red-600 w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl hover:bg-red-700 hover:shadow-2xl text-white"
+                    className="bg-red-600 w-fit px-3 py-1 rounded-md mr-4 text-left text-2xl hover:bg-red-700 hover:shadow-2xl text-white"
                     onClick={(e) => {
-                    const filteredData =  localaData?.filter((remove) => remove.id !== item.id);
-                    setCartData(filteredData);
-                    localStorage.setItem("cart", JSON.stringify(filteredData));
+                      const filteredData = localaData?.filter(
+                        (remove) => remove.id !== item.id
+                      );
+                      setCartData(filteredData);
+                      localStorage.setItem(
+                        "cart",
+                        JSON.stringify(filteredData)
+                      );
                     }}
                   >
                     Remove
@@ -65,13 +74,9 @@ function Cart() {
             ))
           )}
 
-         
           {/*  */}
         </div>
-        
       </div>
-
-       
     </div>
   );
 }

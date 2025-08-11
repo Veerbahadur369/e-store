@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FaFilter, FaStar } from "react-icons/fa";
 import Loader from "../Components/Loader";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { FaGear, FaX } from "react-icons/fa6";
 import { GiBigGear } from "react-icons/gi";
+import { set } from "react-hook-form";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -15,6 +16,11 @@ const Product = () => {
   const [brands, setBrands] = useState("");
   const [originalProducts, setOriginalProducts] = useState([]);
   const [showFilter,setShowFilter] =useState(true);
+  // setting states start
+  const [showSetting,setShowSetting] =useState(true);
+  const [width, setWidth] = useState(300);
+  // setting states end
+
   const handlePageClick = (data) => {
     setSkip(data.selected * 24);
   };
@@ -85,6 +91,13 @@ const Product = () => {
 
     setProducts(filtered);
   }, [minPrice,maxPrice ,category, originalProducts]);
+
+
+             // handleing the setting functionality
+  const handleSetting = () => {
+    setShowSetting(!showSetting);
+  }
+
 
   return (
     <div className="pt-16 select-none" onDoubleClick={()=>setShowFilter(!showFilter)}>
@@ -158,14 +171,32 @@ const Product = () => {
         {/* all filters are end */}
 
          {/* All settings are start */}
-       <div className="mb-4 flex justify-end absolute right-10 top-[200px]">
-  <div className="group flex justify-center h-10 items-center gap-1 border-2 rounded-2xl p-1 cursor-pointer  hover:text-blue-500">
+       <div
+       onClick={handleSetting}
+        className="mb-4 flex justify-end absolute right-10 top-[200px]">
+              {showSetting ?  <div className="group flex justify-center h-10 items-center gap-1 border-2 rounded-2xl p-1 cursor-pointer  hover:text-blue-500">
     <h1 className="text-xl font-bold mb-2 text-[#5b5656] group-hover:text-blue-500 transition">
       Setting
     </h1>
     <FaGear className="text-2xl text-[#5b5656] group-hover:text-blue-500 transition" />
-  </div>
+  </div>: <FaX className="text-2xl  text-left  font-bold  mb-10  "/>}
 </div>
+
+    {!showSetting  && <div className="h-fit absolute z-23 bg-gradient-to-r from-purple-200 to-blue-500 py-10 px-2 md:px-12 rounded-3xl right-3 gap-12 items-center mb-6 flex flex-col">
+      <div>
+        <h1>Image</h1>
+       
+         <input
+          className="w-48 accent-purple-400 focus:accent-green-600"
+          type="range"
+          min={1}
+          max={300}
+          value={width}
+          onChange={(e) => setWidth(e.target.value)}
+        />
+        <h1>Image Width :${width} px</h1>
+      </div>
+      </div>}
 
           {/* All settings are End */}
 
@@ -179,7 +210,9 @@ const Product = () => {
                 <img
                   src={product.thumbnail}
                   alt={product.title}
-                  className="w-full h-52 "
+                  height={width}
+                  width={width}
+                  className={` `}
                 />
                 <div className="p-4">
                   <h2 className="text-xl font-semibold text-gray-800 truncate">
