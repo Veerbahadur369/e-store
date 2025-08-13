@@ -251,11 +251,11 @@ const Product = () => {
           marginPagesDisplayed={4}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName="inline-flex -space-x-px rounded-md shadow"
+          containerClassName="inline-flex -space-x-px hover:text-blue-600 rounded-md shadow"
           pageClassName="px-4 rounded-lg py-2 text-md font-medium text-gray-900 ring-1  ring-inset ring-gray-400 hover:text-blue-500 hover:bg-gray-400"
-          activeClassName="z-10 bg-blue-600 rounded-lg text-white"
-          previousClassName="px-2 py-2 rounded-lg text-black-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-          nextClassName="px-2 py-2 text-black-400 rounded-lg ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+          activeClassName="z-10 bg-blue-600 rounded-lg text-white active:text-blue-600"
+          previousClassName="px-2 py-2 rounded-lg text-black-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 hover:text-blue-600"
+          nextClassName="px-2 py-2 text-black-400 rounded-lg ring-1 hover:text-blue-600 ring-gray-300 ring-inset hover:bg-gray-50"
           disabledClassName="opacity-50"
         />
          )}
