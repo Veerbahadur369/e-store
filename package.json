@@ -13,6 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.11.0",
+    "node": "^22.18.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.60.0",
